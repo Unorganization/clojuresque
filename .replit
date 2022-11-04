@@ -1,6 +1,6 @@
-run = "clojure -M Clojuresque.clj"
+run = "clojure -M clojuresque.clj"
 
-entrypoint = "Clojuresque.clj"
+entrypoint = "clojuresque.clj"
 
 [env]
 CLJ_CONFIG = "/home/runner/.clojure"
