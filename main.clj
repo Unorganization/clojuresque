@@ -1,4 +1,4 @@
-(ns struct
+(ns Clojuresque
   (:require [clojure.string :as str]) ; can use short name 'str'
   (:gen-class))
 
