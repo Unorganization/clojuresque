@@ -91,22 +91,6 @@
   )
 (atom-ex 5)
 
-,,, (println "agents:")
-(defn agent-ex []
-  (def tickets-sold (agent 0))
-
-  (send tickets-sold + 15)
-  (await-for 100 tickets-sold)
-  (println "Tickets: " @tickets-sold)
-
-  (send tickets-sold + 10)
-  (await-for 100 tickets-sold)
-  (println "Tickets: " @tickets-sold)
-
-  (shutdown-agents)
-  )
-(agent-ex)
-
 ,,, (println "math stuff:")
 ,,, (println (+ 1 2 3))  ; 6
 ,,, (println (- 5 3 2))  ; 0
@@ -134,7 +118,10 @@
 ,,, (println (rand-int 20))  ; random 0-19
 
 ,,, (println (reduce + [1 2 3]))  ; 6
-,,, (println Math/PI)
+,,, (println Math/PI)  
+    
+    (def my-ratio 10/7)
+    (println (numerator my-ratio))
 
 ,,, (println "functions:")
 (defn say-hello
@@ -334,4 +321,5 @@
          (println "Hello")
          (println "Hello Again")
   )
+
 
