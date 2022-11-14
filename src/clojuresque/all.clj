@@ -1,13 +1,15 @@
 (ns clojuresque.all
   (:require [clojure.string :as str]) ; can use short name 'str'
+  (:require [clojure.set :refer [union, difference, intersection, subset?]])
   (:gen-class))
 
-(println "Hello World!")
+(println "Hello " "World!")
 
 ,,,(println "numbers:")
 (def myint 10) ,,,(println myint)
+,,, (println (type myint))  ; java.lang.Long
 (def mydbl 3.14) ,,,(println mydbl)
-,,,(println (type mydbl))  ; show type
+,,, (println (type mydbl))  ; java.lang.Double
 ,,,(println (nil? mydbl))  ; test for nil
 ,,,(println (pos? -1) (neg? -1)  ; test for positive or negative value
             (even? -1) (odd? -1)  ; test for even or odd
@@ -17,24 +19,34 @@
 
 ,,,(println "strings:")
 (def str1 "Hello")
-,,, (println (format "This is a string %s" str1))
-,,, (println (str/blank? str1))
-,,, (println (str/includes? str1 "Hell"))
-,,, (println (str/index-of str1 "llo"))
-,,, (println (str/split str1 #" "))
-,,, (println (str/split str1 #"l"))
-,,, (println (str/join " " ["The" "Big" "Cheese"]))
+,,, (println (type str1))  ; java.lang.String
+,,, (println (format "This is a string %s" str1))  ; This is a string Hello
+,,, (println (str/blank? str1))  ; false
+,,, (println (str/includes? str1 "Hell"))  ; true
+,,, (println (str/index-of str1 "llo"))  ; 2
+,,, (println (str/split str1 #" "))  ; [Hello]
+,,, (println (str/split str1 #"l"))  ; [He  o]
+,,, (println (str/join " " ["The" "Big" "Cheese"]))  ; "The Big Cheese"
 ,,, (println (str/replace "I am 42" #"42", "43"))  ; "I am 43"
-,,, (println (str/trim "  hi  "))
-,,, (println (str/trim-newline "  hi  "))
-,,, (println (str/trimr "  hi  "))
-,,, (println (str/triml "  hi  "))
-,,, (println (str/upper-case "  hi  "))
-,,, (println (str/lower-case "  HI  "))
+,,, (println (str/trim "  hi  "))  ; hi
+,,, (println (str/trim-newline "  hi  "))  ; "  hi  "
+,,, (println (str/trimr "  hi  "))  ;  hi
+,,, (println (str/triml "  hi  "))  ; hi
+,,, (println (str/upper-case "  hi  "))  ;  HI
+,,, (println (str/lower-case "  HI  "))  ;  hi
+
+(println \Z)  ; single character  ; Z
+(println #"[A-Z]")  ; string that's a regex  ; #"[A-Z]" 
+
+(def my-reg-expr2 #"[a-z]*")
+(println (re-find my-reg-expr2 "state is NY"))  ; "state"
+(println (re-find my-reg-expr2 "01234 is zip"))  ; nil
+
 
 ,,,(println "lists:")
 ,,, (println '(1 2 3 "Dog", true, 4.2))
 (def list1 (list 4 5 6))
+,,, (println list1)  ; (4 5 6)
 ,,, (println (first list1))  ; 4
 ,,, (println (rest list1))  ; (5 6)
 ,,, (println (nth list1 1))  ; 5
@@ -43,9 +55,15 @@
 ,,, (println (list* 3 list1))  ; (3 4 5 6)
 ,,, (println (list* 1 2 3 list1)) ; (1 2 3 4 5 6)
 ,,, (println (cons 3 list1))  ; (3 4 5 6)
+,,, (println (into () list1 ))  ; (6 5 4)
+,,, (println (peek list1))  ; 4
+,,, (println (pop list1))  ; (5 6)
+,,, (println (list? list1))  ; true
+(println `(1 2 3))  ; (1 2 3)
+
 
 ,,,(println "sets:")
-,,, (println #{ 1 2 3 })  ; #{ 1 3 2 }
+,,, (println #{1 2 3})  ; #{ 1 3 2 }
 ,,, (println (set (list 1 1 2)))  ; #{1 2}
 (def set1 (set '(4 5 6)))
 ,,, (println (get set1 6))  ; 6
@@ -53,6 +71,11 @@
 ,,, (println (contains? set1 6))  ; true
 ,,, (println (conj set1 7))  ; #{ 7 4 6 5 }
 ,,, (println (disj set1 4))  ; #{ 6 5 }
+,,, (println (union set1 #{4 5}))  ; #{ 4 6 5 }
+,,, (println (difference set1 #{4 5}))  ; #{ 6 }
+,,, (println (intersection set1 #{4 5}))  ; #{ 4 5 }
+,,, (println (subset? set1 #{4 5}))  ; false
+,,, (println (list? set1))  ; false
 
 ,,,(println "vectors:")
 ,,, (println (vector 1 2 3))  ; [1 2 3 ]
@@ -61,8 +84,13 @@
 ,,, (println (get vec1 3))  ; Cat
 ,,, (println (conj vec1 3))  ; [ 1 2 3 Cat 3 ]
 ,,, (println (pop vec1))  ; [1 2 3]
-,,, (println (subvec [99 88 77 66 55] 2 4 ))  ; [77 66]
-
+,,, (println (subvec [99 88 77 66 55] 2 4))  ; [77 66]
+,,, (println (assoc vec1 1 99))  ; [1 99 3 Cat]
+,,, (println (subvec vec1 1 3))  ; [2 3] 
+,,, (println (subvec vec1 1))  ; [2 3 Cat] 
+,,, (println (vector? vec1))  ; true
+,,, (println (list? vec1))  ; false
+    
 ,,,(println "maps:")
 ,,, (println (hash-map "y" 3 "x" 4))   ; {x 4, y 3}
 ,,, (println (sorted-map "y" 3 "x" 4))  ; {x 4, y 3}
@@ -76,23 +104,89 @@
 ,,, (println (merge map1 (hash-map "y" 3 "x" 4)))  ; {b 6, a 5, x 4, y 3}
 ,,, (println (merge-with + map1 (hash-map "y" 3 "x" 4)))  ; {b 6, a 5, x 4, y 3}
 
+    ; add to an existing map
+(println (assoc map1 "c" 4))  ; {b 6, a 5, c 4}
+(println (dissoc map1 "b"))  ; {a 5,}
+
+,,, (println "maps using keywords")
+(def jeep-wrangler {:make "Jeep" :model "Wrangler"})
+(println jeep-wrangler)  ; {:make Jeep, :model Wrangler}
+(println (get jeep-wrangler :make))  ; "Jeep"
+(println (:make jeep-wrangler))  ; "Jeep"
+(println (:model jeep-wrangler))  ; "Wrangler"
+(println (class jeep-wrangler))  ; clojure.lang.PersistentArrayMap
+
+(defrecord CarModel [make model])
+
+(def fiat-500 (->CarModel "Fiat" "500"))
+(println (:make fiat-500))  ; "Fiat"
+(println (:model fiat-500))  ; "500"
+
+(def ford-focus (map->CarModel {:make "Ford"  :model "Focus"}))
+(println (:make ford-focus))  ; "Ford"
+(println (:model ford-focus))  ; "Focus"
+
+(def nocar (map->CarModel {}))
+(println (:make nocar))  ; "nil"
+(println (:model nocar))  ; "nil"
+
+(println (class CarModel))  ; clojuresque.all.CarModel
+(println (type :make))   ; clojure.lang.Keyword
+
+,,, (println "protocols")
+(defprotocol Display
+  (title [this])
+  (description [this description]))
+
+(defrecord Person [name phone]
+  Display
+  (title [this] (str "This is " name " with phone " phone))
+  (description [this descr] (str name " with phone " phone " is " descr)))
+
+(def bob (->Person "Bob" "555-1212"))
+(println (:name bob))  ; Bob
+(println (:phone bob))  ; 555-1212
+(println (title bob))  ; This is Bob with phone 555-1212
+(println (description bob "a man"))  ; Bob with phone 555-1212 is a man
+
+(defrecord Product [name price])
+(def toaster (->Product "Toaster" 19.95))
+
+; extend an pre-existing Record type with an protocol
+(extend-protocol Display
+  Product
+  (title [p] (str "This product is a " (:name p)))
+  (description [p desc] (str "The " (:name p) " costs " (:price p) " and " desc)))
+(println (title toaster))  ; This product is a Toaster
+(println (description toaster "not on sale"))  ; The Toaster costs 19.95 and not on sale
+
+,,,(println "deftype:")
+,,,(deftype Rectangle [length width])
+(def myRectangle1 (Rectangle. 5 11))
+(def myRectangle2 (->Rectangle 9 4))
+
+(println (.length myRectangle1))  ; 5
+(println (.width myRectangle2))  ; 4
+
+
 ,,,(println "atoms:")
 (defn atom-ex [x]
   (def atomEx (atom x))
   (add-watch atomEx :watcher
-       (fn [key atom old-state new-state]
-         (println "atomEx changed from "
-                  old-state " to " new-state)))
+             (fn [key atom old-state new-state]
+               (println "atomEx changed from "
+                        old-state " to " new-state)))
   (println "1st x" @atomEx)
   (reset! atomEx 10)
   (println "2nd x" @atomEx)
   (swap! atomEx inc)
-  (println "Increment x" @atomEx)
-  )
+  (println "Increment x" @atomEx))
 (atom-ex 5)
+
 
 ,,, (println "math stuff:")
 ,,, (println (+ 1 2 3))  ; 6
+,,, (println (clojure.core/+ 1 2 3))  ; 6
 ,,, (println (- 5 3 2))  ; 0
 ,,, (println (* 2 5))  ; 10
 ,,, (println (/ 10 5))  ; 2
@@ -101,7 +195,7 @@
 ,,, (println (inc 5))  ; 6
 ,,, (println (dec 5))  ; 4
 
-,,, (println 
+,,, (println
      (Math/abs -10)  ; 10
      (Math/cbrt -8)  ; -2.0
      (Math/sqrt 4)  ; 2.0
@@ -114,45 +208,62 @@
      (Math/max 1 5)  ; 5
      (Math/min 1 5)  ; 1
      (Math/pow 2 2)  ; 4.0
-  )
+     )
 ,,, (println (rand-int 20))  ; random 0-19
 
 ,,, (println (reduce + [1 2 3]))  ; 6
-,,, (println Math/PI)  
-    
-    (def my-ratio 10/7)
-    (println (numerator my-ratio))
+,,, (println Math/PI)
+
+(def my-ratio 100/8)
+,,, (println (type my-ratio))  ; clojure.lang.Ratio
+(println my-ratio)  ; 25/2
+(println (numerator my-ratio))  ; 25
+(def my-ratio2 (/ 100 8))
+(println (denominator my-ratio2))  ; 2
+(println (double my-ratio))  ; 12.5
+(println (type (double my-ratio)))  ; java.lang.Double
+
+(def my-ratio3 10/2)
+(println my-ratio3)  ; 5
+(println (ratio? my-ratio3))  ; false
+,,, (println (type my-ratio3))  ; java.lang.Long
+
 
 ,,, (println "functions:")
 (defn say-hello
   "Receives a name with 1 parameter and responds"
   [name]
-  
-  (println "Hello again" name)
-  )
+
+  (println "Hello again" name))
 (say-hello "bob")
 
 (defn get-sum [x y]
   (+ x y))
 ,,, (println (get-sum 5 6))  ; 11
 
+    ; multi-arity function
 (defn get-sum-more
   ([x y z]
-  (+ x y z))
+   (+ x y z))
 
   ([x y]
-   (+ x y))
-)
+   (+ x y)))
+
 ,,, (println (get-sum-more 6 7))  ; 13
 ,,, (println (get-sum-more 5 6 7))  ; 18
 
+; doseq iterations over a sequence; can support nested loops
+(defn print-elems [first & rest]
+  (println first)
+  (doseq [arg rest] (println arg)))
+
+(print-elems "First" "Second" 3 4 "Fifth")  ; First\nSecond\n3\n4\nFifth
+
 (defn hello-you [name]
-  (str "Hello " name)
-  )
+  (str "Hello " name))
 
 (defn hello-all [& names]
-  (map hello-you names)
-  )
+  (map hello-you names))
 
 ,,,(println (hello-all "kenny" "michelle" "aaron"))
     ; (Hello kenny Hello michelle Hello aaron)
@@ -168,9 +279,7 @@
 (defn can-vote [age]
   (if (>= age 18)
     (println "You can vote")
-    (println "You can't vote")
-    )
-  )
+    (println "You can't vote")))
 
 ,,, (println "can-vote 17")  (can-vote 17)  ; You can't vote
 ,,, (println "can-vote 18")  (can-vote 18)  ; You can vote
@@ -179,15 +288,15 @@
 (defn can-do-more [age]
   (if (>= age 18)
     (do (println "You can drive")
-      (println "You can vote"))
-    (println "You can't vote"))
-  )
+        (println "You can vote"))
+    (println "You can't vote")))
 ,,, (println "can-do-more 17")  (can-do-more 17)  ; You can drive
 ,,, (println "can-do-more 18")  (can-do-more 18)  ; You can vote
 ,,, (println "can-do-more 19")  (can-do-more 19)  ; You can vote
 
+    ; when like if without else
 (defn when-ex [tof]
-  (when tof 
+  (when tof
     (println "1st thing")
     (println "2nd thing")))
 (when-ex true)  ; 1st thing  \n  2nd thing
@@ -205,6 +314,46 @@
 (what-grade 17)  ; Go to grade 12
 (what-grade 19)  ; Go to college
 
+; case
+(defn case-ex1 [input-num]
+  (case input-num
+    1 "one"
+    2 "two"
+    3 "three"
+    "don't know"))
+(println (case-ex1 1))  ; one
+(println (case-ex1 2))  ; two
+(println (case-ex1 3))  ; three
+(println (case-ex1 4))  ; don't know
+
+; recur
+(loop [i 0]
+  (when (< i 5)
+    (println i)
+    (recur (inc i)); loop i will take this value
+))  ; 0\n 1\n 2\n 3\n 4\n
+
+; fac without recur
+(defn calc-factorial [num]
+  (if (zero? num)
+    1
+    (* num (calc-factorial (dec num)))))
+,,, (calc-factorial 5)  ; 120
+
+; fac using recur
+(def calc-factorial2
+  (fn [n]
+    (loop [cnt n
+           acc 1]
+      (if (zero? cnt)
+        acc
+        (recur (dec cnt) (* acc cnt))
+; in loop cnt will take the value (dec cnt)
+; and acc will take the value (* acc cnt)
+        ))))
+,,, (calc-factorial2 5)  ; 120
+
+
 ,,, (println "looping:")
 (defn one-to-x [x]
   (def i (atom 1))
@@ -214,6 +363,7 @@
       (swap! i inc))))
 ,,, (println "one-to-x 5")  (one-to-x 5)  ; 1 \n 2 \n 3 \n 4 \n 5 \n
 
+    ; dotimes = used to run expression n times
 (defn dbl-to-x [x]
   (dotimes [i x]
     (println (* i 2))))
@@ -225,6 +375,20 @@
       (println (* i 3))
       (recur (+ i 1)))))
 ,,, (println "triple-to-x 2 6")  (triple-to-x 2 6) ; 6 \n 9 \n 12 \n 15 \n
+
+(dotimes [n 5]
+  (println (str "My number is: " n)))  ; My number is 0\n, etc. to 4 
+    
+    ; doseq output not captured
+    (doseq [num-one [1 2 3]
+            num-two [4 5 6]]
+      (println num-one " " num-two))  ; 1 4\n 1 5\n 1 6\n, 2 4\n 2 5\n etc. to 3 6\n
+
+; for comprhension -- supports mult seqs, output captured
+(println (for [num-one [1 2 3]
+      num-two [4 5 6]]
+  [num-one num-two]))  ; ([1 4] [1 5] [1 6] [2 4] [2 5] [2 6] [3 4] [3 5] [3 6])
+
 
 (defn print-list
   [& nums]
@@ -243,7 +407,7 @@
   [file]
   (try
     (println (slurp file))
-  (catch Exception e (println "Error" (.getMessage e)))))
+    (catch Exception e (println "Error" (.getMessage e)))))
 
 (defn append-to-file
   [file text]
@@ -301,7 +465,7 @@
    (list `if cond dis1 dis2)))
 
 (discount (> 25 65) (println "10% Off")
-(println "Full Price"))  ; Full Price
+          (println "Full Price"))  ; Full Price
 
 (defmacro reg-math [calc]
   (list (second calc) (first calc) (nth calc 2)))
@@ -312,14 +476,12 @@
   (list `if cond (cons 'do body)))
 (do-more (< 1 2)
          (println "Hello")
-         (println "Hello Again")
-  )
+         (println "Hello Again"))
 
 (defmacro do-more-2 [cond & body]
   `(if ~cond (do ~@body)))
 (do-more-2 (< 1 2)
-         (println "Hello")
-         (println "Hello Again")
-  )
+           (println "Hello")
+           (println "Hello Again"))
 
 
