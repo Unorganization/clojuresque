@@ -104,6 +104,12 @@
 ,,, (println (merge map1 (hash-map "y" 3 "x" 4)))  ; {b 6, a 5, x 4, y 3}
 ,,, (println (merge-with + map1 (hash-map "y" 3 "x" 4)))  ; {b 6, a 5, x 4, y 3}
 
+(def mapx (zipmap [1 2 3] [11 22 33]))
+    (println mapx)  ; {1 11, 2 22, 3 33}
+(def mapx2 (zipmap [1 2 3] [11 22]))
+    (println mapx2)  ; {1 11, 2 22}
+
+    
     ; add to an existing map
 (println (assoc map1 "c" 4))  ; {b 6, a 5, c 4}
 (println (dissoc map1 "b"))  ; {a 5,}
@@ -170,6 +176,12 @@
 
 
 ,,,(println "atoms:")
+(def vx 5)
+(def vatom (atom vx))
+   (println @vatom)  ; 5 
+   (swap! vatom (fn [x] (+ x 3))) 
+   (println @vatom)  ; 8  
+
 (defn atom-ex [x]
   (def atomEx (atom x))
   (add-watch atomEx :watcher
@@ -183,6 +195,16 @@
   (println "Increment x" @atomEx))
 (atom-ex 5)
 
+,,,(println "transactions / dosync")
+(def vref1 (ref 5))
+(def vref2 (ref 6))
+   (println @vref1 @vref2)  ; 5  6
+   
+(dosync
+   (alter vref1 (fn [x] (+ x 3)))
+   (alter vref2 (fn [x] (+ x 3)))
+ )
+   (println @vref1 @vref2)  ; 8 9
 
 ,,, (println "math stuff:")
 ,,, (println (+ 1 2 3))  ; 6
@@ -457,7 +479,7 @@
 (println (take-while neg? [-1 0 1]))  ; (-1)
 (println (drop-while neg? [-1 0 1]))  ; (0 1)
 (println (filter #(> % 2) [1 2 3 4]))  ; (3 4)
-
+(println (take 7 (cycle [ 1 2 3])))  ; (1 2 3 1 2 3 1)
 
 ,,, (println "macros:")
 (defmacro discount
@@ -485,3 +507,13 @@
            (println "Hello Again"))
 
 
+
+;; (def light-phases 
+;;   [#{:green}
+;;    #{:yellow}
+;;    #{:red :yellow}])
+
+;; (def next-phase)
+
+;; (println light-phases)
+;; (println (cycle light-phases))
