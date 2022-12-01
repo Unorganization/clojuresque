@@ -17,9 +17,13 @@
   (:require [clojuresque.looping :as looping])
   (:require [clojuresque.fileio :as fileio])
   (:require [clojuresque.destructuring :as destructuring])
+  (:require [clojuresque.structs :as structs])
+  (:require [clojuresque.lambdas :as lambdas]) 
+  (:require [clojuresque.filters :as filters]) 
+  (:require [clojuresque.macros :as macros]) 
+  
   (:require [clojuresque.agent-try :as agent-try])
   (:require [cheshire.core :as cheshire])
-  (:require [clojuresque.all :as all])
   (:gen-class))
 
   (defn -main
@@ -31,7 +35,7 @@
 
 
     (println "\n\n*** start") (println "press enter to start") (read-line)
-    (destructuring/destructuring)
+    (macros/macros)
     (println "\npress enter to continue") (read-line)
 
     (numbers/numbers)
@@ -50,6 +54,10 @@
     (conditions/conditions)
     (looping/looping)
     (fileio/fileio)
+    (destructuring/destructuring)
+    (structs/structs)
+    (lambdas/lambdas)
+    (filters/filters)
     
     
     (println "calling agent")
