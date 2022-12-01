@@ -20,8 +20,9 @@
   (discount (> 25 65) (println "10% Off")
             (println "Full Price"))  ; Full Price
 
-  (println (reg-math (2 + 5)))  ; # 7
-  
+  (println (reg-math #_{:clj-kondo/ignore [:not-a-function]}
+            (2 + 5)))  ; # 7
+
   (do-more (< 1 2)
            (println "Hello")
            (println "Hello Again"))
