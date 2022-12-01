@@ -26,7 +26,7 @@
   
   (:require [clojuresque.agent-try :as agent-try])
 
-  (:require [cheshire.core :as cheshire])
+  ;; (:require [cheshire.core :as cheshire])
   (:gen-class))
 
   #_{:clj-kondo/ignore [:unused-binding]}
@@ -37,10 +37,10 @@
     (greet/print-hello-world)
     (println (greet/hello-world-msg))
 
-    (println "\n\n*** start") (println "press enter to start") (read-line)
-    (structs/structs)
+    ;; (println "\n\n*** start") (println "press enter to start") (read-line)
+  
     
-    (println "\npress enter to continue") (read-line)
+    ;; (println "\npress enter to continue") (read-line)
 
     (numbers/numbers)
     (lists/lists)
@@ -60,7 +60,7 @@
     (looping/looping)
     (fileio/fileio)
     (destructuring/destructuring)
-    ;; (structs/structs)
+    (structs/structs)
     (lambdas/lambdas)
     (filters/filters)
     (macros/macros) 
@@ -69,5 +69,5 @@
     (agent-try/agent-ex)
     (println "after agent")
 
-    (println (cheshire/generate-string {:name "kenny" :mood "happy"}))
+   ;; (println (cheshire/generate-string {:name "kenny" :mood "happy"}))
     )
