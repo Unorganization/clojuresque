@@ -37,8 +37,10 @@
     (greet/print-hello-world)
     (println (greet/hello-world-msg))
 
-    ;; (println "\n\n*** start") (println "press enter to start") (read-line)
-    ;; (println "\npress enter to continue") (read-line)
+    (println "\n\n*** start") (println "press enter to start") (read-line)
+    (structs/structs)
+    
+    (println "\npress enter to continue") (read-line)
 
     (numbers/numbers)
     (lists/lists)
@@ -58,7 +60,7 @@
     (looping/looping)
     (fileio/fileio)
     (destructuring/destructuring)
-    (structs/structs)
+    ;; (structs/structs)
     (lambdas/lambdas)
     (filters/filters)
     (macros/macros) 
