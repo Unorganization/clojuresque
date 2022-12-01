@@ -3,168 +3,6 @@
   (:require [clojure.set :refer [union, difference, intersection, subset?]])
   (:gen-class))
 
-(println "Hello " "World!")
-
-,,,(println "numbers:")
-(def myint 10) ,,,(println myint)
-,,, (println (type myint))  ; java.lang.Long
-(def mydbl 3.14) ,,,(println mydbl)
-,,, (println (type mydbl))  ; java.lang.Double
-,,,(println (nil? mydbl))  ; test for nil
-,,,(println (pos? -1) (neg? -1)  ; test for positive or negative value
-            (even? -1) (odd? -1)  ; test for even or odd
-            (number? -1) (integer? -1)  ; is number?  is float 
-            (zero? -1)  ; is zero
-            )
-
-,,,(println "strings:")
-(def str1 "Hello")
-,,, (println (type str1))  ; java.lang.String
-,,, (println (format "This is a string %s" str1))  ; This is a string Hello
-,,, (println (str/blank? str1))  ; false
-,,, (println (str/includes? str1 "Hell"))  ; true
-,,, (println (str/index-of str1 "llo"))  ; 2
-,,, (println (str/split str1 #" "))  ; [Hello]
-,,, (println (str/split str1 #"l"))  ; [He  o]
-,,, (println (str/join " " ["The" "Big" "Cheese"]))  ; "The Big Cheese"
-,,, (println (str/replace "I am 42" #"42", "43"))  ; "I am 43"
-,,, (println (str/trim "  hi  "))  ; hi
-,,, (println (str/trim-newline "  hi  "))  ; "  hi  "
-,,, (println (str/trimr "  hi  "))  ;  hi
-,,, (println (str/triml "  hi  "))  ; hi
-,,, (println (str/upper-case "  hi  "))  ;  HI
-,,, (println (str/lower-case "  HI  "))  ;  hi
-
-(println \Z)  ; single character  ; Z
-(println #"[A-Z]")  ; string that's a regex  ; #"[A-Z]" 
-
-(def my-reg-expr2 #"[a-z]*")
-(println (re-find my-reg-expr2 "state is NY"))  ; "state"
-(println (re-find my-reg-expr2 "01234 is zip"))  ; nil
-
-
-,,,(println "lists:")
-,,, (println '(1 2 3 "Dog", true, 4.2))
-(def list1 (list 4 5 6))
-,,, (println list1)  ; (4 5 6)
-,,, (println (first list1))  ; 4
-,,, (println (rest list1))  ; (5 6)
-,,, (println (nth list1 1))  ; 5
-,,, (println (conj list1 3))  ; (3 4 5 6)
-,,, (println (conj list1 3 2 1))  ; (1 2 3 4 5 6)
-,,, (println (list* 3 list1))  ; (3 4 5 6)
-,,, (println (list* 1 2 3 list1)) ; (1 2 3 4 5 6)
-,,, (println (cons 3 list1))  ; (3 4 5 6)
-,,, (println (into () list1 ))  ; (6 5 4)
-,,, (println (peek list1))  ; 4
-,,, (println (pop list1))  ; (5 6)
-,,, (println (list? list1))  ; true
-(println `(1 2 3))  ; (1 2 3)
-
-
-,,,(println "sets:")
-,,, (println #{1 2 3})  ; #{ 1 3 2 }
-,,, (println (set (list 1 1 2)))  ; #{1 2}
-(def set1 (set '(4 5 6)))
-,,, (println (get set1 6))  ; 6
-,,, (println (get set1 66))  ; nil
-,,, (println (contains? set1 6))  ; true
-,,, (println (conj set1 7))  ; #{ 7 4 6 5 }
-,,, (println (disj set1 4))  ; #{ 6 5 }
-,,, (println (union set1 #{4 5}))  ; #{ 4 6 5 }
-,,, (println (difference set1 #{4 5}))  ; #{ 6 }
-,,, (println (intersection set1 #{4 5}))  ; #{ 4 5 }
-,,, (println (subset? set1 #{4 5}))  ; false
-,,, (println (list? set1))  ; false
-
-,,,(println "vectors:")
-,,, (println (vector 1 2 3))  ; [1 2 3 ]
-(def vec1 [1 2 3 "Cat"])
-,,, (println vec1)  ; [1 2 3 Cat]
-,,, (println (get vec1 3))  ; Cat
-,,, (println (conj vec1 3))  ; [ 1 2 3 Cat 3 ]
-,,, (println (pop vec1))  ; [1 2 3]
-,,, (println (subvec [99 88 77 66 55] 2 4))  ; [77 66]
-,,, (println (assoc vec1 1 99))  ; [1 99 3 Cat]
-,,, (println (subvec vec1 1 3))  ; [2 3] 
-,,, (println (subvec vec1 1))  ; [2 3 Cat] 
-,,, (println (vector? vec1))  ; true
-,,, (println (list? vec1))  ; false
-    
-,,,(println "maps:")
-,,, (println (hash-map "y" 3 "x" 4))   ; {x 4, y 3}
-,,, (println (sorted-map "y" 3 "x" 4))  ; {x 4, y 3}
-(def map1 {"b" 6 "a" 5})
-,,, (println map1)  ; {a 6, b 5}
-,,, (println (get map1 "b"))  ; 6
-,,, (println (find map1 "b"))  ; [b 6]
-,,, (println (contains? map1 "b"))  ; true
-,,, (println (keys map1))  ; (b, a)
-,,, (println (vals map1))  ; (6 5)
-,,, (println (merge map1 (hash-map "y" 3 "x" 4)))  ; {b 6, a 5, x 4, y 3}
-,,, (println (merge-with + map1 (hash-map "y" 3 "x" 4)))  ; {b 6, a 5, x 4, y 3}
-
-(def mapx (zipmap [1 2 3] [11 22 33]))
-    (println mapx)  ; {1 11, 2 22, 3 33}
-(def mapx2 (zipmap [1 2 3] [11 22]))
-    (println mapx2)  ; {1 11, 2 22}
-
-    
-    ; add to an existing map
-(println (assoc map1 "c" 4))  ; {b 6, a 5, c 4}
-(println (dissoc map1 "b"))  ; {a 5,}
-
-,,, (println "maps using keywords")
-(def jeep-wrangler {:make "Jeep" :model "Wrangler"})
-(println jeep-wrangler)  ; {:make Jeep, :model Wrangler}
-(println (get jeep-wrangler :make))  ; "Jeep"
-(println (:make jeep-wrangler))  ; "Jeep"
-(println (:model jeep-wrangler))  ; "Wrangler"
-(println (class jeep-wrangler))  ; clojure.lang.PersistentArrayMap
-
-(defrecord CarModel [make model])
-
-(def fiat-500 (->CarModel "Fiat" "500"))
-(println (:make fiat-500))  ; "Fiat"
-(println (:model fiat-500))  ; "500"
-
-(def ford-focus (map->CarModel {:make "Ford"  :model "Focus"}))
-(println (:make ford-focus))  ; "Ford"
-(println (:model ford-focus))  ; "Focus"
-
-(def nocar (map->CarModel {}))
-(println (:make nocar))  ; "nil"
-(println (:model nocar))  ; "nil"
-
-(println (class CarModel))  ; clojuresque.all.CarModel
-(println (type :make))   ; clojure.lang.Keyword
-
-,,, (println "protocols")
-(defprotocol Display
-  (title [this])
-  (description [this description]))
-
-(defrecord Person [name phone]
-  Display
-  (title [this] (str "This is " name " with phone " phone))
-  (description [this descr] (str name " with phone " phone " is " descr)))
-
-(def bob (->Person "Bob" "555-1212"))
-(println (:name bob))  ; Bob
-(println (:phone bob))  ; 555-1212
-(println (title bob))  ; This is Bob with phone 555-1212
-(println (description bob "a man"))  ; Bob with phone 555-1212 is a man
-
-(defrecord Product [name price])
-(def toaster (->Product "Toaster" 19.95))
-
-; extend an pre-existing Record type with an protocol
-(extend-protocol Display
-  Product
-  (title [p] (str "This product is a " (:name p)))
-  (description [p desc] (str "The " (:name p) " costs " (:price p) " and " desc)))
-(println (title toaster))  ; This product is a Toaster
-(println (description toaster "not on sale"))  ; The Toaster costs 19.95 and not on sale
 
 ,,,(println "deftype:")
 ,,,(deftype Rectangle [length width])
@@ -178,9 +16,9 @@
 ,,,(println "atoms:")
 (def vx 5)
 (def vatom (atom vx))
-   (println @vatom)  ; 5 
-   (swap! vatom (fn [x] (+ x 3))) 
-   (println @vatom)  ; 8  
+(println @vatom)  ; 5 
+(swap! vatom (fn [x] (+ x 3)))
+(println @vatom)  ; 8  
 
 (defn atom-ex [x]
   (def atomEx (atom x))
@@ -198,13 +36,12 @@
 ,,,(println "transactions / dosync")
 (def vref1 (ref 5))
 (def vref2 (ref 6))
-   (println @vref1 @vref2)  ; 5  6
-   
+(println @vref1 @vref2)  ; 5  6
+
 (dosync
-   (alter vref1 (fn [x] (+ x 3)))
-   (alter vref2 (fn [x] (+ x 3)))
- )
-   (println @vref1 @vref2)  ; 8 9
+ (alter vref1 (fn [x] (+ x 3)))
+ (alter vref2 (fn [x] (+ x 3))))
+(println @vref1 @vref2)  ; 8 9
 
 ,,, (println "math stuff:")
 ,,, (println (+ 1 2 3))  ; 6
@@ -400,16 +237,16 @@
 
 (dotimes [n 5]
   (println (str "My number is: " n)))  ; My number is 0\n, etc. to 4 
-    
+
     ; doseq output not captured
-    (doseq [num-one [1 2 3]
-            num-two [4 5 6]]
-      (println num-one " " num-two))  ; 1 4\n 1 5\n 1 6\n, 2 4\n 2 5\n etc. to 3 6\n
+(doseq [num-one [1 2 3]
+        num-two [4 5 6]]
+  (println num-one " " num-two))  ; 1 4\n 1 5\n 1 6\n, 2 4\n 2 5\n etc. to 3 6\n
 
 ; for comprhension -- supports mult seqs, output captured
 (println (for [num-one [1 2 3]
-      num-two [4 5 6]]
-  [num-one num-two]))  ; ([1 4] [1 5] [1 6] [2 4] [2 5] [2 6] [3 4] [3 5] [3 6])
+               num-two [4 5 6]]
+           [num-one num-two]))  ; ([1 4] [1 5] [1 6] [2 4] [2 5] [2 6] [3 4] [3 5] [3 6])
 
 
 (defn print-list
@@ -479,7 +316,7 @@
 (println (take-while neg? [-1 0 1]))  ; (-1)
 (println (drop-while neg? [-1 0 1]))  ; (0 1)
 (println (filter #(> % 2) [1 2 3 4]))  ; (3 4)
-(println (take 7 (cycle [ 1 2 3])))  ; (1 2 3 1 2 3 1)
+(println (take 7 (cycle [1 2 3])))  ; (1 2 3 1 2 3 1)
 
 ,,, (println "macros:")
 (defmacro discount
