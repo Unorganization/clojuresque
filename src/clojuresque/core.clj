@@ -38,8 +38,7 @@
     (println (greet/hello-world-msg))
 
     ;; (println "\n\n*** start") (println "press enter to start") (read-line)
-  
-    
+      
     ;; (println "\npress enter to continue") (read-line)
 
     (numbers/numbers)

@@ -1,10 +1,12 @@
-(ns clojuresque.fileio)
-(use 'clojure.java.io)
+(ns clojuresque.fileio
+  (:require [clojure.java.io :as io]) ; can use short name 'io'
+  )
+;; (use 'clojure.java.io) ;; enabling this means you don't need the require java.io, and io/writer is referenced to just writer.  But this gives a clj-kondo warning.
 
 
 (defn write-to-file
   [file text]
-  (with-open [wrtr (writer file)]
+  (with-open [wrtr (io/writer file)]
     (.write wrtr text)))
 
 (defn read-from-file
@@ -15,12 +17,12 @@
 
 (defn append-to-file
   [file text]
-  (with-open [wrtr (writer file :append true)]
+  (with-open [wrtr (io/writer file :append true)]
     (.write wrtr text)))
 
 (defn read-lines-from-file
   [file]
-  (with-open [rdr (reader file)]
+  (with-open [rdr (io/reader file)]
     (doseq [line (line-seq rdr)]
       (println line))))
 
