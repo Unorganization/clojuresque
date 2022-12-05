@@ -6,8 +6,6 @@
     (println one two the-rest)))
 
 (def apoint [5 7])
-,,, (println apoint)  ; [5 7]
-,,, (let [[x y] apoint] (println (+ x y)))  ; 12
 
 ;; with arg list
 (def ndx [1 2 3])
@@ -67,4 +65,7 @@
 
   (print-status {:name "Jim" :scores [3 5 4 5]})
   ;; name: Jim hole1: 3 hole2: 5
+
+  ,,, (println apoint)  ; [5 7]
+  ,,, (let [[x y] apoint] (println (+ x y)))  ; 12
   )

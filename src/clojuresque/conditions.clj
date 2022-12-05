@@ -32,13 +32,6 @@
     3 "three"
     "don't know"))
 
-; recur
-(loop [i 0]
-  (when (< i 5)
-    (println i)
-    (recur (inc i)); loop i will take this value
-))  ; 0\n 1\n 2\n 3\n 4\n
-
 ; fac without recur
 (defn calc-factorial [num]
   (if (zero? num)
@@ -94,7 +87,14 @@
   (println (case-ex1 2))  ; two
   (println (case-ex1 3))  ; three
   (println (case-ex1 4))  ; don't know
-
+  
   ,,, (calc-factorial2 5)  ; 120
+
+; recur
+  (loop [i 0]
+    (when (< i 5)
+      (println i)
+      (recur (inc i)); loop i will take this value
+      ))  ; 0\n 1\n 2\n 3\n 4\n
   )
 

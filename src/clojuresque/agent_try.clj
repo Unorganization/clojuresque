@@ -1,8 +1,9 @@
 (ns clojuresque.agent-try)
 
-,,, (println "agents:")
+(def tickets-sold (agent 0))
+
 (defn agent-ex []
-  (def tickets-sold (agent 0))
+  ,,, (println "agents:")
 
   (send tickets-sold + 15)
   (await-for 100 tickets-sold)
@@ -12,9 +13,4 @@
   (await-for 100 tickets-sold)
   (println "Tickets: " @tickets-sold)
 
-  (shutdown-agents)
-  )
-;; (agent-ex) 
-  ;; (agent-try/agent-ex)
-    
-
+  (shutdown-agents))
